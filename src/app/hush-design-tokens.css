@@ -1,0 +1,108 @@
+/* Hush App — Design Tokens */
+/* Source: "Presence With Personality" by Leanne Dolce */
+
+:root {
+  /* === COLORS === */
+  --hush-surface: #fcf9f8;
+  --hush-surface-dim: #dcd9d9;
+  --hush-surface-bright: #fcf9f8;
+  --hush-surface-container-lowest: #ffffff;
+  --hush-surface-container-low: #f6f3f2;
+  --hush-surface-container: #f0eded;
+  --hush-surface-container-high: #eae7e7;
+  --hush-surface-container-highest: #e5e2e1;
+  --hush-on-surface: #1c1b1b;
+  --hush-on-surface-variant: #4c4355;
+  --hush-inverse-surface: #313030;
+  --hush-inverse-on-surface: #f3f0ef;
+  --hush-outline: #7d7387;
+  --hush-outline-variant: #cec2d8;
+
+  /* === BRAND COLORS === */
+  --hush-primary: #6f00d2;
+  --hush-primary-container: #8b2cf5;
+  --hush-on-primary: #ffffff;
+  --hush-on-primary-container: #f2e3ff;
+  --hush-secondary: #2000c7;
+  --hush-secondary-container: #3217ff;
+  --hush-on-secondary: #ffffff;
+  --hush-on-secondary-container: #c1c0ff;
+  --hush-tertiary: #6a4b00;
+  --hush-tertiary-container: #886200;
+  --hush-on-tertiary: #ffffff;
+  --hush-on-tertiary-container: #ffe6bc;
+
+  /* === SEMANTIC COLORS === */
+  --hush-error: #ba1a1a;
+  --hush-on-error: #ffffff;
+  --hush-error-container: #ffdad6;
+
+  /* === BACKGROUNDS === */
+  --hush-background: #fcf9f8;
+  --hush-on-background: #1c1b1b;
+
+  /* === TYPOGRAPHY (Plus Jakarta Sans + Be Vietnam Pro) === */
+  --hush-font-headline: 'Plus Jakarta Sans', sans-serif;
+  --hush-font-body: 'Be Vietnam Pro', sans-serif;
+
+  /* Headline XL: 40px/800/1.1/-0.03em */
+  --hush-text-headline-xl-size: 40px;
+  --hush-text-headline-xl-weight: 800;
+  --hush-text-headline-xl-lineheight: 1.1;
+  --hush-text-headline-xl-spacing: -0.03em;
+
+  /* Headline LG: 32px/700/1.2/-0.02em */
+  --hush-text-headline-lg-size: 32px;
+  --hush-text-headline-lg-weight: 700;
+  --hush-text-headline-lg-lineheight: 1.2;
+  --hush-text-headline-lg-spacing: -0.02em;
+
+  /* Headline MD: 24px/700/1.3 */
+  --hush-text-headline-md-size: 24px;
+  --hush-text-headline-md-weight: 700;
+  --hush-text-headline-md-lineheight: 1.3;
+
+  /* Body LG: 18px/400/1.6 */
+  --hush-text-body-lg-size: 18px;
+  --hush-text-body-lg-weight: 400;
+  --hush-text-body-lg-lineheight: 1.6;
+
+  /* Body MD: 16px/400/1.5 */
+  --hush-text-body-md-size: 16px;
+  --hush-text-body-md-weight: 400;
+  --hush-text-body-md-lineheight: 1.5;
+
+  /* Label Bold: 14px/700/1.2/0.05em */
+  --hush-text-label-bold-size: 14px;
+  --hush-text-label-bold-weight: 700;
+  --hush-text-label-bold-lineheight: 1.2;
+  --hush-text-label-bold-spacing: 0.05em;
+
+  /* Label SM: 12px/500/1.2 */
+  --hush-text-label-sm-size: 12px;
+  --hush-text-label-sm-weight: 500;
+  --hush-text-label-sm-lineheight: 1.2;
+
+  /* === BORDER RADIUS === */
+  --hush-radius-sm: 0.25rem;   /* 4px */
+  --hush-radius: 0.5rem;       /* 8px */
+  --hush-radius-md: 0.75rem;   /* 12px */
+  --hush-radius-lg: 1rem;      /* 16px */
+  --hush-radius-xl: 1.5rem;    /* 24px */
+  --hush-radius-full: 9999px;
+
+  /* === SPACING (8px base) === */
+  --hush-space-xs: 4px;
+  --hush-space-base: 8px;
+  --hush-space-sm: 12px;
+  --hush-space-md: 24px;
+  --hush-space-lg: 40px;
+  --hush-space-xl: 64px;
+  --hush-container-margin: 20px;
+  --hush-gutter: 16px;
+
+  /* === ELEVATION SHADOWS === */
+  --hush-shadow-card: 0 4px 20px rgba(111, 0, 210, 0.04);
+  --hush-shadow-floating: 0 8px 40px rgba(111, 0, 210, 0.08);
+  --hush-button-gradient: linear-gradient(135deg, #8B2CF5, #3011FF);
+}

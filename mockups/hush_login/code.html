@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hush - Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#fcf9f8",
+                      "surface": "#fcf9f8",
+                      "secondary": "#2000c7",
+                      "inverse-primary": "#d8b9ff",
+                      "on-secondary-container": "#c1c0ff",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#e5e2e1",
+                      "primary-fixed-dim": "#d8b9ff",
+                      "secondary-container": "#3217ff",
+                      "surface-dim": "#dcd9d9",
+                      "surface-bright": "#fcf9f8",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#2700e8",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#5d4200",
+                      "on-surface-variant": "#4c4355",
+                      "tertiary-fixed": "#ffdea6",
+                      "secondary-fixed": "#e2dfff",
+                      "on-primary-fixed-variant": "#6300bb",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "outline": "#7d7387",
+                      "primary": "#6f00d2",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#c2c1ff",
+                      "primary-container": "#8b2cf5",
+                      "inverse-surface": "#313030",
+                      "tertiary-fixed-dim": "#f3be56",
+                      "on-primary-container": "#f2e3ff",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#271900",
+                      "surface-container": "#f0eded",
+                      "on-background": "#1c1b1b",
+                      "on-primary-fixed": "#290055",
+                      "outline-variant": "#cec2d8",
+                      "tertiary-container": "#886200",
+                      "surface-tint": "#8018ea",
+                      "surface-container-high": "#eae7e7",
+                      "surface-container-highest": "#e5e2e1",
+                      "on-tertiary-container": "#ffe6bc",
+                      "on-secondary-fixed": "#0c006a",
+                      "primary-fixed": "#eddcff",
+                      "on-surface": "#1c1b1b",
+                      "tertiary": "#6a4b00",
+                      "surface-container-low": "#f6f3f2",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "lg": "40px",
+                      "xs": "4px",
+                      "md": "24px",
+                      "sm": "12px",
+                      "xl": "64px",
+                      "base": "8px",
+                      "container-margin": "20px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Be Vietnam Pro"],
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "label-bold": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                      "headline-xl": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                      "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .input-shadow {
+                box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+            }
+            .card-shadow {
+                box-shadow: 0 4px 20px rgba(139, 44, 245, 0.04);
+            }
+            .gradient-text {
+                @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+            }
+            .btn-primary {
+                @apply bg-gradient-to-r from-primary to-secondary text-on-primary rounded-xl font-label-bold text-label-bold py-4 px-6 w-full shadow-[0_8px_16px_rgba(111,0,210,0.2)] hover:shadow-[0_12px_24px_rgba(111,0,210,0.3)] transition-all duration-300;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex items-center justify-center p-4 antialiased">
+<!-- Main Container - Mobile First Centered -->
+<main class="w-full max-w-[420px] mx-auto bg-surface-container-lowest rounded-[32px] card-shadow overflow-hidden relative flex flex-col min-h-[800px] md:min-h-[700px]">
+<!-- Top Image Area -->
+<div class="h-64 relative w-full overflow-hidden shrink-0">
+<img alt="Hero image" class="absolute inset-0 w-full h-full object-cover" data-alt="A warm, inviting abstract 3D composition representing connection and presence. Soft, rounded organic shapes in gentle violet and teal tones float in a bright, light-mode environment. The lighting is diffused and friendly, casting subtle shadows that emphasize depth and approachability, aligning with a modern, empathetic communication coaching app aesthetic." src="https://lh3.googleusercontent.com/aida/ADBb0uheVxBBWMqBg-hGdcp27la55YNdMcc9d_gAR9u8NXf5uRzP609hlDSVSHWoD31bCYo6KF0TbjamDKJif632mbupDQNYCVIYsS9xUY0MJWlIc65VRKhWLyGf7in99D6LKDt-MgVU8Cj_TvVjm3gUNpOPIjoFlD6xB2hKWvgz-r2h0KrRYxRbaXj7HnZY271ccHe9gjO7PhKit4Eitno136mhc3RPtTogVkeRjW7wgBLNx0n364Vs2nkcTO6hwiMX3yeNinrnSRMhkuw"/>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-surface-container-lowest"></div>
+</div>
+<!-- Content Area -->
+<div class="flex-1 flex flex-col px-md pb-xl pt-sm relative z-10 -mt-12 bg-surface-container-lowest rounded-t-[32px]">
+<!-- Header -->
+<div class="text-center mb-xl">
+<h1 class="font-headline-xl text-headline-xl gradient-text mb-sm tracking-tighter">Hush</h1>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-xs">Welcome into the room</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Your presence is requested.</p>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-md flex-1">
+<div class="flex flex-col gap-sm">
+<div class="flex flex-col gap-xs">
+<label class="font-label-bold text-label-bold text-on-surface ml-xs" for="email">Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">mail</span>
+<input class="w-full bg-surface-container-low border border-surface-variant rounded-xl py-4 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent transition-all input-shadow outline-none" id="email" placeholder="hello@example.com" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center ml-xs">
+<label class="font-label-bold text-label-bold text-on-surface" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-primary hover:text-secondary transition-colors" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">lock</span>
+<input class="w-full bg-surface-container-low border border-surface-variant rounded-xl py-4 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent transition-all input-shadow outline-none" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-lg">
+<button class="btn-primary flex items-center justify-center gap-2 group" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center mt-md font-body-md text-body-md text-on-surface-variant">
+                        New here? <a class="text-primary font-label-bold hover:text-secondary transition-colors" href="#">Create an account</a>
+</p>
+</div>
+</form>
+</div>
+</main>
+</body></html>

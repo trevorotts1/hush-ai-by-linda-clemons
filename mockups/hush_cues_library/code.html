@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hush - Body Language Cues</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fcf9f8",
+                        "surface": "#fcf9f8",
+                        "secondary": "#2000c7",
+                        "inverse-primary": "#d8b9ff",
+                        "on-secondary-container": "#c1c0ff",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e5e2e1",
+                        "primary-fixed-dim": "#d8b9ff",
+                        "secondary-container": "#3217ff",
+                        "surface-dim": "#dcd9d9",
+                        "surface-bright": "#fcf9f8",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#2700e8",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "on-surface-variant": "#4c4355",
+                        "tertiary-fixed": "#ffdea6",
+                        "secondary-fixed": "#e2dfff",
+                        "on-primary-fixed-variant": "#6300bb",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "outline": "#7d7387",
+                        "primary": "#6f00d2",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c2c1ff",
+                        "primary-container": "#8b2cf5",
+                        "inverse-surface": "#313030",
+                        "tertiary-fixed-dim": "#f3be56",
+                        "on-primary-container": "#f2e3ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-container": "#f0eded",
+                        "on-background": "#1c1b1b",
+                        "on-primary-fixed": "#290055",
+                        "outline-variant": "#cec2d8",
+                        "tertiary-container": "#886200",
+                        "surface-tint": "#8018ea",
+                        "surface-container-high": "#eae7e7",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-tertiary-container": "#ffe6bc",
+                        "on-secondary-fixed": "#0c006a",
+                        "primary-fixed": "#eddcff",
+                        "on-surface": "#1c1b1b",
+                        "tertiary": "#6a4b00",
+                        "surface-container-low": "#f6f3f2",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "lg": "40px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "sm": "12px",
+                        "xl": "64px",
+                        "base": "8px",
+                        "container-margin": "20px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "label-bold": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-xl": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                        "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(111, 0, 210, 0.04);
+        }
+        .soft-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(111, 0, 210, 0.08);
+            transition: all 0.3s ease;
+        }
+        .linda-cue {
+            border-left: 4px solid #f3be56; /* tertiary-fixed-dim */
+            background-color: rgba(243, 190, 86, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased font-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col md:flex-row">
+<!-- TopAppBar (Mobile) / SideNavBar (Desktop) -->
+<!-- Mobile Top Navigation (md:hidden) -->
+<header class="md:hidden fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 shadow-sm flex justify-between items-center px-6 py-4">
+<div class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 font-['Plus_Jakarta_Sans'] font-bold">Hush</div>
+<div class="flex items-center space-x-4">
+<button class="text-violet-600 dark:text-violet-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors rounded-full p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Desktop Side Navigation (hidden md:flex) -->
+<nav class="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shadow-xl z-40">
+<div class="p-6 flex flex-col items-center border-b border-slate-100 dark:border-slate-800">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mb-4 overflow-hidden">
+<span class="material-symbols-outlined text-3xl text-on-primary-container" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h1 class="text-xl font-extrabold text-violet-600 font-['Plus_Jakarta_Sans'] font-medium">Hush Coach</h1>
+<p class="text-sm text-slate-500 mt-1">Presence with Personality</p>
+</div>
+<div class="flex-1 overflow-y-auto py-4 divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Tabs -->
+<ul class="space-y-1">
+<li>
+<a class="flex items-center px-6 py-4 text-slate-500 dark:text-slate-400 hover:text-violet-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] font-medium" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="forum" style="font-variation-settings: 'FILL' 0;">forum</span>
+                        Coach
+                    </a>
+</li>
+<li>
+<a class="flex items-center px-6 py-4 text-violet-600 dark:text-violet-400 border-r-4 border-violet-600 dark:border-violet-400 bg-violet-50 dark:bg-violet-900/20 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] font-medium" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="auto_stories" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+                        Library
+                    </a>
+</li>
+<li>
+<a class="flex items-center px-6 py-4 text-slate-500 dark:text-slate-400 hover:text-violet-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] font-medium" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="insights" style="font-variation-settings: 'FILL' 0;">insights</span>
+                        Progress
+                    </a>
+</li>
+<li>
+<a class="flex items-center px-6 py-4 text-slate-500 dark:text-slate-400 hover:text-violet-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] font-medium" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="settings" style="font-variation-settings: 'FILL' 0;">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full md:ml-64 pt-20 md:pt-0 pb-24 md:pb-0 min-h-screen flex flex-col relative overflow-hidden">
+<!-- Decorative Background Element -->
+<div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-primary-fixed opacity-30 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-[1140px] mx-auto w-full px-container-margin md:px-md py-lg flex-1">
+<!-- Page Header -->
+<header class="mb-lg">
+<div class="flex items-center space-x-sm mb-sm">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="auto_stories" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<h2 class="font-headline-xl text-headline-xl text-on-background">Body Language Cues</h2>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Master the unsaid. This library curates expert advice to help you refine your non-verbal communication, projecting confidence, warmth, and authority in every interaction.
+                </p>
+</header>
+<!-- Search & Filter Bar -->
+<div class="flex flex-col sm:flex-row gap-sm mb-lg">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full pl-12 pr-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-on-surface transition-shadow shadow-sm" placeholder="Search cues..." type="text"/>
+</div>
+<div class="flex gap-xs overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
+<button class="px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-bold text-label-bold whitespace-nowrap">All Cues</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-low border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold whitespace-nowrap">Posture</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-low border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold whitespace-nowrap">Hands</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-low border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold whitespace-nowrap">Face</button>
+</div>
+</div>
+<!-- Bento Grid of Cues -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Cue Card 1 (Featured/Large) -->
+<div class="col-span-1 md:col-span-2 lg:col-span-2 glass-card rounded-[24px] overflow-hidden soft-lift flex flex-col sm:flex-row cursor-pointer group">
+<div class="sm:w-2/5 relative h-48 sm:h-auto overflow-hidden">
+<img alt="Open Palms" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A brightly lit, modern office environment showing a confident professional woman with open posture. She is wearing a stylish, structured blazer in deep violet. The lighting is soft and warm, emphasizing approachability and expertise. The aesthetic is clean, professional, and slightly energetic, with a subtle golden glow illuminating the scene from the right." src="https://lh3.googleusercontent.com/aida/ADBb0uggzBa6iTu9_Xbo0Fsg9shk7UxZ7acbg9B11wHIJkbBSvS9BYJ20jwom6DZ-pgmCxxEfnvpH-BERbNAH2nUQNLe_7HUTUH_DJyNl2RRCNbdy2xgPH8wlPSLMoMhbd_vrXfsseSNFsZYMd2XvkPxj__29_5lB9J6h48J9NZfRLgo2gWBgRlRMlN2xuYqhNuMu3-9mmmF3rrSd-oVNmlCuQbjXDeGw5zKC25_rd3QXNjNqJsHwWuwzRJWxxqrFXAHiQvtxr9w5YuE8w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex gap-xs">
+<span class="px-2 py-1 rounded-full bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm border border-white/30">Hands</span>
+<span class="px-2 py-1 rounded-full bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm border border-white/30">Trust</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Open Palms</h3>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark" style="font-variation-settings: 'FILL' 0;">bookmark</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                                Keeping your palms visible and open signals honesty and non-threat. It's a primal cue that builds subconscious trust immediately in negotiations or casual introductions.
+                            </p>
+</div>
+<div class="linda-cue p-4 rounded-lg mt-auto">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="tips_and_updates" style="font-variation-settings: 'FILL' 1;">tips_and_updates</span>
+<span class="font-label-bold text-label-bold text-tertiary">Linda's Tip</span>
+</div>
+<p class="font-body-sm text-sm text-on-surface">Avoid pointing. Instead, gesture towards objects or people with an open hand, palm slightly up.</p>
+</div>
+</div>
+</div>
+<!-- Cue Card 2 -->
+<div class="glass-card rounded-[24px] overflow-hidden soft-lift flex flex-col cursor-pointer group">
+<div class="relative h-40 overflow-hidden">
+<img alt="Eye Contact" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A close-up portrait of a person maintaining strong, engaging eye contact. The subject has a warm, confident expression. The lighting highlights their eyes, creating a bright, optimistic mood. The background is a soft, blurred light grey, focusing entirely on the human connection and empathetic communication." src="https://lh3.googleusercontent.com/aida/ADBb0uheVxBBWMqBg-hGdcp27la55YNdMcc9d_gAR9u8NXf5uRzP609hlDSVSHWoD31bCYo6KF0TbjamDKJif632mbupDQNYCVIYsS9xUY0MJWlIc65VRKhWLyGf7in99D6LKDt-MgVU8Cj_TvVjm3gUNpOPIjoFlD6xB2hKWvgz-r2h0KrRYxRbaXj7HnZY271ccHe9gjO7PhKit4Eitno136mhc3RPtTogVkeRjW7wgBLNx0n364Vs2nkcTO6hwiMX3yeNinrnSRMhkuw"/>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-xl font-bold text-on-surface">The 50/70 Rule</h3>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark" style="font-variation-settings: 'FILL' 0;">bookmark</span>
+</button>
+</div>
+<div class="flex gap-xs mb-3">
+<span class="px-2 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-[10px]">Face</span>
+</div>
+<p class="font-body-md text-sm text-on-surface-variant mb-4 flex-1">
+                            Maintain eye contact 50% of the time while speaking and 70% while listening. This demonstrates active engagement without becoming intensely confrontational.
+                        </p>
+</div>
+</div>
+<!-- Cue Card 3 -->
+<div class="glass-card rounded-[24px] overflow-hidden soft-lift flex flex-col cursor-pointer group">
+<div class="relative h-40 overflow-hidden">
+<img alt="Mirroring" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A professional setting showing two people in a meeting. One person is subtly mirroring the other's posture. The scene is brightly lit with natural light, conveying a sense of collaboration and mutual understanding. The aesthetic is clean, modern, and inviting, utilizing warm neutral tones with small pops of primary colors." src="https://lh3.googleusercontent.com/aida/ADBb0uhX3Pa0o6hOBFmmCmqkYCDDF7tTV4vBrRz2Lc_dFkE_-JaON9WSTId2pANQoGMfnQ1F-crVeQCdyIp2k-wAXtDVHgfPn2akv3_QU9x8YtxsTnnDiypfZzaejLj9eNUFLqG3-YbFh1xGGqD4F9l3EvWDPnIBIpuIlzkJyggBypeQ5T2sqLdM4dZRWAhZh9oSqIJiWbTpIFmtfl3FbOaxrR4xL-JmnN_0VS66mj30rcDk7kGtKRIb__rNmBdvcYbI3TptWyWDYJhJUqI"/>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-xl font-bold text-on-surface">Subtle Mirroring</h3>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark" style="font-variation-settings: 'FILL' 0;">bookmark</span>
+</button>
+</div>
+<div class="flex gap-xs mb-3">
+<span class="px-2 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-[10px]">Posture</span>
+</div>
+<p class="font-body-md text-sm text-on-surface-variant mb-4 flex-1">
+                            Gently matching the posture or energy level of your conversation partner builds rapport. It signals empathy and creates a feeling of 'being on the same page'.
+                        </p>
+</div>
+</div>
+<!-- Cue Card 4 -->
+<div class="glass-card rounded-[24px] overflow-hidden soft-lift flex flex-col cursor-pointer group">
+<div class="relative h-40 overflow-hidden">
+<img alt="Power Posture" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A person standing tall with excellent posture in a bright, modern architectural space. The individual looks poised and authoritative, shoulders back, head held high. The lighting casts soft shadows, emphasizing the solid, grounded stance. The mood is empowering and professional." src="https://lh3.googleusercontent.com/aida/ADBb0ugWOjr3PvK6q105NuWISIcOGfhNsIGH4FflJL5zRM2SzrjQCGlvYmLL9rZG3T71Ixq3dvpVAiFJR9t0E3HI6QTyCS60Vp3xvd7-rPc22p8co3rl7oUdPWCYANX5qyATx9OZefGZhbCEFkc4r5YGY8phELJCMdE5z2374LDDF1RezsdYTX6LecPpUrJmX20SJOSruPlKFSWGbuCXrKCVxSW0r7kxqnR1TXE7iUsDsTK9IMpD7iuKkrb7cA13RSxdTeeoIvpUsrONUV8"/>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-xl font-bold text-on-surface">The 'V' Stance</h3>
+<button class="text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+</div>
+<div class="flex gap-xs mb-3">
+<span class="px-2 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-[10px]">Posture</span>
+<span class="px-2 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-[10px]">Authority</span>
+</div>
+<p class="font-body-md text-sm text-on-surface-variant mb-4 flex-1">
+                            Stand with feet shoulder-width apart, weight evenly distributed. This grounded stance projects stability and confidence, preventing nervous swaying.
+                        </p>
+</div>
+</div>
+<!-- Placeholder Card for more content -->
+<div class="glass-card rounded-[24px] p-6 soft-lift flex flex-col items-center justify-center text-center cursor-pointer border-dashed border-2 border-outline-variant bg-transparent hover:bg-surface-container-low transition-colors min-h-[300px]">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-outline text-3xl" data-icon="add" style="font-variation-settings: 'FILL' 0;">add</span>
+</div>
+<h3 class="font-headline-md text-lg font-bold text-on-surface mb-2">Discover More</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Unlock additional advanced cues in the pro library.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg rounded-t-3xl border-t border-slate-200/50 dark:border-slate-800/50 shadow-[0_-4px_20px_rgba(139,44,245,0.08)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-violet-500 transition-transform active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="chat_bubble" style="font-variation-settings: 'FILL' 0;">chat_bubble</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans']">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-violet-500 transition-transform active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="psychology" style="font-variation-settings: 'FILL' 0;">psychology</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans']">Modes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-violet-500 transition-transform active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history" style="font-variation-settings: 'FILL' 0;">history</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans']">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-violet-600 dark:text-violet-400 scale-110 transition-transform active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans']">Profile</span>
+</a>
+</nav>
+</body></html>
