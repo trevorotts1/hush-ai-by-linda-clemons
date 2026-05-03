@@ -74,6 +74,20 @@ export async function POST(req: NextRequest) {
     // Get response
     const response = await chat(messages as any);
 
+    // Generate affirmation after 5+ exchanges if not yet done
+    let affirmation = session.affirmation;
+    if (!affirmation && exchangeCount >= 5) {
+      const affirmationPrompt = [
+        { role: "system", content: "You are Ms. Linda Clemons. Based on this coaching conversation, write a short, powerful personal affirmation for the user. It should be 1-2 sentences, in Linda's voice, using the user's name. It should reference what they discussed and give them a mantra to carry forward. Output ONLY the affirmation text, nothing else." },
+        { role: "user", content: transcript.slice(-10).map((m: any) => `${m.role === "assistant" ? "Ms. Linda" : userName}: ${m.content}`).join("\n") },
+      ];
+      try {
+        const affResponse = await chat(affirmationPrompt as any, { temperature: 0.9 });
+        affirmation = affResponse.text;
+        await supabaseAdmin.from("hush_sessions").update({ affirmation }).eq("id", session_id);
+      } catch { /* affirmation is optional */ }
+    }
+
     // Store in transcript
     const newTranscript = [
       ...transcript,

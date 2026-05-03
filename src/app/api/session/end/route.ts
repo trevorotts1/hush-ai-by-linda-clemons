@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { sendSessionEmail } from "@/lib/deliver";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,29 +14,36 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error || !session) return NextResponse.json({ error: "Session not found" }, { status: 404 });
-
     if (session.status !== "active") return NextResponse.json({ status: "already_ended" });
 
-    // Generate affirmation if not already done
-    let affirmation = session.affirmation;
-    if (!affirmation && session.transcript?.length > 4) {
-      // Placeholder — full implementation in Phase 4
-      affirmation = "Let your presence speak before your words ever do. Your body is your power.";
+    // Get user email
+    const { data: user } = await supabaseAdmin
+      .from("hush_users")
+      .select("email, first_name")
+      .eq("id", session.user_id)
+      .single();
+
+    // Send post-session email (transcript + affirmation + word cloud)
+    if (user?.email) {
+      await sendSessionEmail(user.email, user.first_name || "friend", {
+        transcript: session.transcript || [],
+        affirmation: session.affirmation,
+        primary_track: session.primary_track,
+      });
     }
 
+    // Mark session completed
     await supabaseAdmin
       .from("hush_sessions")
       .update({
         status: "completed",
         ended_at: new Date().toISOString(),
-        affirmation: affirmation || null,
       })
       .eq("id", session_id);
 
-    // TODO: Trigger email + infographic generation (Phase 4)
-
     return NextResponse.json({ status: "ended", session_id });
   } catch (error: any) {
+    console.error("Session end error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
