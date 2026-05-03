@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hush App — AI Coaching by Linda Clemons
 
-## Getting Started
+Linda Clemons' AI-powered nonverbal communication coaching app. Built on her bestselling book *Hush*, the app delivers real-time body language insights, coaching conversations, and voice-guided exercises through Linda's unmistakable voice and methodology.
 
-First, run the development server:
+## Features
+
+- **AI Coaching Chat** — DeepSeek-powered conversations in Linda Clemons' voice, drawing from her full book and methodology
+- **Voice TTS** — Fish Audio voice synthesis using Linda's custom voice model
+- **Mode Selection** — Multiple coaching tracks including "Read the Room," "Command the Room," and "Read Anyone Instantly"
+- **Affirmation Generation** — AI-generated personalized affirmations based on session context
+- **Post-Session Email** — Session summaries delivered via AgentMail with word cloud visualization
+- **Responsive Design** — Desktop and mobile layouts matching Stitch mockups
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 |
+| UI | React 19, Tailwind CSS v4 |
+| Language | TypeScript |
+| AI Chat | DeepSeek V4 Flash |
+| Voice TTS | Fish Audio |
+| Database | Supabase (PostgreSQL) |
+| Email | AgentMail |
+| Deployment | Vercel |
+| Image Gen | Kie.ai (GPT Image 2) |
+| Embeddings | OpenAI text-embedding-3-small |
+
+## Setup
 
 ```bash
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env.local
+
+# Fill in your API keys in .env.local
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|----------|-------------|
+| `DEEPSEEK_API_KEY` | DeepSeek API key for chat completions |
+| `FISH_AUDIO_API_KEY` | Fish Audio API key for TTS |
+| `FISH_AUDIO_VOICE_ID_LINDA` | Linda Clemons voice model ID |
+| `SUPABASE_URL` | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
+| `NEXT_PUBLIC_SUPABASE_URL` | Public Supabase URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public Supabase anon key |
+| `AGENTMAIL_API_KEY` | AgentMail API key for email |
+| `KIE_API_KEY` | Kie.ai API key for image generation |
+| `OPENAI_API_KEY` | OpenAI API key for embeddings |
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Deployed on Vercel. Push to `main` to trigger automatic deployment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Repository
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+https://github.com/trevorotts1/hush-ai-by-linda-clemons
