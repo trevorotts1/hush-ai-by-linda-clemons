@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         text,
-        voice_id: voiceId,
+        model_id: voiceId,
         format: "mp3",
       }),
     });

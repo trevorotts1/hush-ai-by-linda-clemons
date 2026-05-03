@@ -119,9 +119,14 @@ export default function ChatPage() {
 
   function playAudio(url: string) {
     if (audioRef.current) {
-      audioRef.current.src = url;
-      audioRef.current.play();
-      setPlayingAudio(url);
+      if (playingAudio === url && !audioRef.current.paused) {
+        audioRef.current.pause();
+        setPlayingAudio(null);
+      } else {
+        audioRef.current.src = url;
+        audioRef.current.play();
+        setPlayingAudio(url);
+      }
     }
   }
 
