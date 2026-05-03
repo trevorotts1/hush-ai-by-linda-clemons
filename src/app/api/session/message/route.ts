@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { buildSystemPrompt } from "@/lib/prompt";
 import { chat } from "@/lib/deepseek";
-import { searchKnowledge, formatRagContext } from "@/lib/rag";
 
 const MAX_EXCHANGES = 100;
 
@@ -57,23 +56,12 @@ export async function POST(req: NextRequest) {
       .map((m) => `${m.role === "assistant" ? "Ms. Linda" : userName}: ${m.content}`)
       .join("\n");
 
-    // RAG search
-    const chunks = await searchKnowledge(message, history);
-    const ragContext = formatRagContext(chunks);
-
-    // Build messages
+    // Build messages — knowledge base is in system prompt directly (no RAG needed)
     const systemPrompt = buildSystemPrompt({ track: session.primary_track, userName, exchangeCount });
     
     const messages: Array<{ role: string; content: string }> = [
       { role: "system", content: systemPrompt },
     ];
-
-    if (ragContext) {
-      messages.push({
-        role: "system",
-        content: `Use the following knowledge from Linda Clemons' book "Hush" to answer. Only use information from these sources:\n\n${ragContext}`,
-      });
-    }
 
     // Add conversation history (last 10 exchanges)
     for (const msg of transcript.slice(-20)) {

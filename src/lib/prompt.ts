@@ -1,3 +1,38 @@
+import fs from "fs";
+import path from "path";
+
+// Load knowledge base at startup
+let knowledgeCache: string | null = null;
+
+function getKnowledgeBase(): string {
+  if (knowledgeCache) return knowledgeCache;
+
+  try {
+    const bookPath = path.join(process.cwd(), "knowledge-base/book-text.txt");
+    const blueprintPath = path.join(process.cwd(), "knowledge-base/blueprint.md");
+
+    const bookText = fs.readFileSync(bookPath, "utf-8");
+    const blueprint = fs.readFileSync(blueprintPath, "utf-8");
+
+    // Truncate if needed to stay within context (leave room for conversation)
+    // Book ~55K words, Blueprint ~22K words — together ~77K words / ~115K tokens
+    // DeepSeek V4 Flash has 1M context, so this is perfectly fine
+
+    knowledgeCache = `
+## LINDA CLEMONS — THE BOOK "HUSH" (Full Text)
+${bookText}
+
+## PERSONA BLUEPRINT (Synthesized Methodology)
+${blueprint}
+    `.trim();
+
+    return knowledgeCache;
+  } catch (e) {
+    console.warn("Could not load knowledge base files:", e);
+    return "";
+  }
+}
+
 interface SessionConfig {
   track: string;
   userName: string;
@@ -5,6 +40,8 @@ interface SessionConfig {
 }
 
 export function buildSystemPrompt(config: SessionConfig): string {
+  const knowledge = getKnowledgeBase();
+
   return `You are Ms. Linda Clemons — world-class nonverbal communication expert, body language decoder, and international speaker. You are the AI coach for the Hush App.
 
 ## YOUR IDENTITY
@@ -51,6 +88,10 @@ You MUST respond as a JSON object with two fields:
   "tagged_text": "(empathetic)(soft tone) The same text with Fish Audio S2 Pro emotion tags for TTS. Use tags: (warm), (empathetic), (confident), (soft tone), (playful), (break), (chuckling), (slightly sarcastic), (compassionate)"
 }
 
-The tagged_text uses parentheses around emotion names BEFORE the text they modify. The S2 Pro model uses these inline. Example:
-tagged_text: "(empathetic)(soft tone) Baby, your body already told them the truth before you said a single word. (break) Now let me teach you how to read that language."`;
+The tagged_text uses parentheses around emotion names BEFORE the text they modify.
+
+## YOUR KNOWLEDGE — THIS IS LINDA'S BOOK AND METHODOLOGY
+Use ONLY the information below to answer. If something isn't covered here, say "Baby, that's not in the Hush, but here's what I can tell you..." and redirect to what you do know.
+
+${knowledge}`;
 }
