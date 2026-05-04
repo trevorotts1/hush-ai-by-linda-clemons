@@ -130,6 +130,14 @@ export default function ModeSelectPage() {
                 onClick={() => selectTrack(track.id)}
                 className="group relative overflow-hidden rounded-[24px] bg-surface-container-lowest border border-[#E5E5E5] p-md text-left transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] active:scale-[0.98] flex flex-col gap-md disabled:opacity-50"
               >
+                {/* Abstract decorative shapes matching each card theme */}
+                <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
+                  {track.id === "Read Anyone Instantly" && <div className="w-full h-full rounded-full bg-primary" />}
+                  {track.id === "Command Any Room" && <div className="w-full h-full rounded-bl-full bg-secondary" />}
+                  {track.id === "Master Your Own Signals" && <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-tertiary" />}
+                  {track.id === "Transform Your Relationships" && <div className="absolute bottom-0 right-0 w-24 h-24 rounded-tl-full bg-white/30" />}
+                  {track.id === "Something Else" && <div className="absolute top-4 right-4 w-16 h-16 rounded-2xl bg-outline-variant" />}
+                </div>
                 <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
                 <div className="flex items-center justify-between z-10">
                   <div className={`w-12 h-12 rounded-xl ${track.iconBg} ${track.iconColor} flex items-center justify-center`}>
@@ -175,6 +183,17 @@ export default function ModeSelectPage() {
                   : "bg-white border-surface-variant hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
               }`}
             >
+              {/* Abstract decorative shapes */}
+              <div className="absolute top-0 right-0 w-full h-full opacity-10 group-hover:opacity-15 transition-opacity pointer-events-none">
+                {track.id === "Read Anyone Instantly" && <div className="absolute -top-8 -right-8 w-48 h-48 rounded-full bg-primary" />}
+                {track.id === "Command Any Room" && <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full bg-secondary" />}
+                {track.id === "Master Your Own Signals" && <>
+                  <div className="absolute top-4 right-4 w-24 h-24 rounded-full bg-tertiary" />
+                  <div className="absolute bottom-4 left-4 w-16 h-16 rounded-full bg-tertiary" />
+                </>}
+                {track.id === "Transform Your Relationships" && <div className="absolute -right-4 -top-4 w-full h-full rounded-2xl bg-white/20" />}
+                {track.id === "Something Else" && <div className="absolute top-8 right-8 w-20 h-20 rotate-45 bg-outline-variant" />}
+              </div>
               <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
               <div className="relative z-10 p-md flex flex-col h-full justify-between">
                 <div className={`w-12 h-12 rounded-full ${track.iconBg} flex items-center justify-center mb-sm`}>
