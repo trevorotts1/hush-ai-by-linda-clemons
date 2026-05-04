@@ -6,9 +6,9 @@ export async function POST(req: NextRequest) {
     if (!text) return NextResponse.json({ error: "text required" }, { status: 400 });
 
     const apiKey = process.env.FISH_AUDIO_API_KEY;
-    const voiceId = process.env.FISH_AUDIO_VOICE_ID_LINDA;
+    const referenceId = process.env.FISH_AUDIO_VOICE_ID_LINDA;
     
-    if (!apiKey || !voiceId) {
+    if (!apiKey || !referenceId) {
       return NextResponse.json({ error: "TTS not configured" }, { status: 500 });
     }
 
@@ -17,10 +17,11 @@ export async function POST(req: NextRequest) {
       headers: {
         "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
+        "model": "s2-pro",
       },
       body: JSON.stringify({
         text,
-        voice_id: voiceId,
+        reference_id: referenceId,
         format: "mp3",
       }),
     });
