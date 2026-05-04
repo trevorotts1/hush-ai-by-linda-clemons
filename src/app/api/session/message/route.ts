@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { buildSystemPrompt } from "@/lib/prompt";
 import { chat } from "@/lib/deepseek";
+import { searchBook, formatSearchContext } from "@/lib/search";
 
 const MAX_EXCHANGES = 100;
 
@@ -56,12 +57,22 @@ export async function POST(req: NextRequest) {
       .map((m) => `${m.role === "assistant" ? "Ms. Linda" : userName}: ${m.content}`)
       .join("\n");
 
-    // Build messages — knowledge base is in system prompt directly (no RAG needed)
+    // Build messages with semantic search
     const systemPrompt = buildSystemPrompt({ track: session.primary_track, userName, exchangeCount });
     
     const messages: Array<{ role: string; content: string }> = [
       { role: "system", content: systemPrompt },
     ];
+
+    // Search for relevant book content using Supabase full-text search
+    const searchResults = await searchBook(message);
+    const bookContext = formatSearchContext(searchResults);
+    if (bookContext) {
+      messages.push({
+        role: "system",
+        content: `Use this relevant content from Linda Clemons' book "Hush" to inform your answer:\n\n${bookContext}`,
+      });
+    }
 
     // Add conversation history (last 10 exchanges)
     for (const msg of transcript.slice(-20)) {
