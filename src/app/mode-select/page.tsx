@@ -15,6 +15,7 @@ const TRACKS = [
     iconBg: "bg-primary-container/20",
     iconColor: "text-primary",
     hoverColor: "group-hover:text-primary",
+    image: "/images/hush-read-anyone.jpg",
   },
   {
     id: "Command Any Room",
@@ -25,6 +26,7 @@ const TRACKS = [
     iconBg: "bg-secondary-container/20",
     iconColor: "text-secondary",
     hoverColor: "group-hover:text-secondary",
+    image: "/images/hush-command-room.jpg",
   },
   {
     id: "Master Your Own Signals",
@@ -35,6 +37,7 @@ const TRACKS = [
     iconBg: "bg-tertiary-container/20",
     iconColor: "text-tertiary",
     hoverColor: "group-hover:text-tertiary",
+    image: "/images/hush-master-signals.jpg",
   },
   {
     id: "Transform Your Relationships",
@@ -43,6 +46,7 @@ const TRACKS = [
     icon: "mic",
     gradient: "from-primary/60 to-secondary/60",
     iconBg: "bg-white/20",
+    image: "/images/hush-relationships.jpg",
     iconColor: "text-white",
     hoverColor: "group-hover:text-white",
     featured: true,
@@ -56,6 +60,7 @@ const TRACKS = [
     iconBg: "bg-surface-container-high",
     iconColor: "text-on-surface-variant",
     hoverColor: "group-hover:text-on-surface",
+    image: null,
   },
 ];
 
@@ -183,6 +188,12 @@ export default function ModeSelectPage() {
                   : "bg-white border-surface-variant hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
               }`}
             >
+              {/* Card background image */}
+              {track.image && (
+                <div className="absolute top-0 right-0 w-3/5 h-full overflow-hidden rounded-r-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500 mix-blend-multiply">
+                  <img src={track.image} alt="" className="object-cover w-full h-full" />
+                </div>
+              )}
               {/* Abstract decorative shapes */}
               <div className="absolute top-0 right-0 w-full h-full opacity-10 group-hover:opacity-15 transition-opacity pointer-events-none">
                 {track.id === "Read Anyone Instantly" && <div className="absolute -top-8 -right-8 w-48 h-48 rounded-full bg-primary" />}
