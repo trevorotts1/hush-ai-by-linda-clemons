@@ -21,6 +21,7 @@ export default function ChatPage() {
   const [exchangeCount, setExchangeCount] = useState(0);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [playingAudio, setPlayingAudio] = useState<string | null>(null);
   const [listening, setListening] = useState(false);
 
   // Speech-to-text using Web Speech API
