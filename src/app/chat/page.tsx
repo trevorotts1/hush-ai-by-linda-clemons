@@ -118,16 +118,26 @@ export default function ChatPage() {
   }
 
   function playAudio(url: string) {
-    if (audioRef.current) {
-      if (playingAudio === url && !audioRef.current.paused) {
-        audioRef.current.pause();
-        setPlayingAudio(null);
-      } else {
-        audioRef.current.src = url;
-        audioRef.current.play();
-        setPlayingAudio(url);
-      }
+    if (!audioRef.current) return;
+    
+    // If same audio is playing, pause it
+    if (playingAudio === url) {
+      audioRef.current.pause();
+      setPlayingAudio(null);
+      return;
     }
+    
+    // If same audio is paused, resume it
+    if (audioRef.current.src.includes(url.split(',')[1]?.slice(0, 50) || '')) {
+      audioRef.current.play();
+      setPlayingAudio(url);
+      return;
+    }
+    
+    // New audio — load and play
+    audioRef.current.src = url;
+    audioRef.current.play();
+    setPlayingAudio(url);
   }
 
   if (sessionEnded) {
