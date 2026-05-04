@@ -21,7 +21,25 @@ export default function ChatPage() {
   const [exchangeCount, setExchangeCount] = useState(0);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [playingAudio, setPlayingAudio] = useState<string | null>(null);
+  const [listening, setListening] = useState(false);
+
+  // Speech-to-text using Web Speech API
+  function startListening() {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput((prev) => prev + ' ' + transcript);
+      setListening(false);
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+    setListening(true);
+    recognition.start();
+  }
 
   useEffect(() => {
     const stored = sessionStorage.getItem("hush_session");
@@ -267,12 +285,13 @@ export default function ChatPage() {
               disabled={loading}
             />
             <button
-              type="submit"
-              disabled={loading || !input.trim()}
-              className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-secondary-container shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50"
+              type="button"
+              onClick={() => input.trim() ? sendMessage({ preventDefault: () => {} } as any) : startListening()}
+              disabled={loading}
+              className={`w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50 ${listening ? 'bg-red-500 animate-pulse' : 'bg-gradient-to-br from-primary-container to-secondary-container'}`}
             >
               <span className="material-symbols-outlined text-on-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                send
+                {listening ? 'mic' : input.trim() ? 'send' : 'mic'}
               </span>
             </button>
           </form>
@@ -361,12 +380,13 @@ export default function ChatPage() {
               disabled={loading}
             />
             <button
-              type="submit"
-              disabled={loading || !input.trim()}
-              className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-[12px] bg-gradient-to-br from-primary-container to-secondary-container shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50"
+              type="button"
+              onClick={() => input.trim() ? sendMessage({ preventDefault: () => {} } as any) : startListening()}
+              disabled={loading}
+              className={`w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-[12px] shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50 ${listening ? 'bg-red-500 animate-pulse' : 'bg-gradient-to-br from-primary-container to-secondary-container'}`}
             >
               <span className="material-symbols-outlined text-on-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                send
+                {listening ? 'mic' : input.trim() ? 'send' : 'mic'}
               </span>
             </button>
           </form>
