@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+export const maxDuration = 300;
+
 export async function GET(req: NextRequest) {
   try {
     const offset = parseInt(req.nextUrl.searchParams.get("offset") || "0");
     const batchSize = 50;
-    
+
     const SUPABASE_URL = process.env.SUPABASE_URL!;
     const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
@@ -15,7 +17,6 @@ export async function GET(req: NextRequest) {
       "utf-8"
     );
 
-    // Chunk
     const chunks: string[] = [];
     let start = 0;
     while (start < text.length) {
@@ -24,10 +25,7 @@ export async function GET(req: NextRequest) {
       if (end < text.length) {
         for (const sep of [". ", ".\n", "\n\n", "\n", " "]) {
           const idx = chunk.lastIndexOf(sep);
-          if (idx > 150) {
-            chunk = text.slice(start, start + idx + 2);
-            break;
-          }
+          if (idx > 150) { chunk = text.slice(start, start + idx + 2); break; }
         }
       }
       chunk = chunk.trim();
@@ -35,10 +33,9 @@ export async function GET(req: NextRequest) {
       start += chunk.length;
     }
 
-    // Get requested batch
     const batch = chunks.slice(offset, offset + batchSize);
-    
-    // Insert
+    if (batch.length === 0) return NextResponse.json({ total: chunks.length, done: true });
+
     const res = await fetch(`${SUPABASE_URL}/rest/v1/hush_book_chunks`, {
       method: "POST",
       headers: {
@@ -49,16 +46,15 @@ export async function GET(req: NextRequest) {
       },
       body: JSON.stringify(batch.map((c) => ({ content: c }))),
     });
-    
+
     if (!res.ok) throw new Error(await res.text());
 
-    const total = chunks.length;
-    const done = Math.min(offset + batchSize, total);
-
     return NextResponse.json({
-      total,
+      total: chunks.length,
       offset,
       inserted: batch.length,
+      done: offset + batchSize >= chunks.length,
+    });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
