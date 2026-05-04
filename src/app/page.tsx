@@ -127,8 +127,12 @@ export default function SignupPage() {
       {/* DESKTOP LAYOUT */}
       <main className="hidden md:flex bg-background text-on-surface font-body-md min-h-screen items-center justify-center p-4 antialiased">
         <div className="w-full max-w-[420px] mx-auto bg-surface-container-lowest rounded-[32px] card-shadow overflow-hidden relative flex flex-col min-h-[800px] md:min-h-[700px]">
-          <div className="h-64 relative w-full overflow-hidden shrink-0 bg-gradient-to-br from-primary-container/30 via-primary-fixed/20 to-secondary-fixed-dim/20">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-surface-container-lowest" />
+          <div className="h-64 relative w-full overflow-hidden shrink-0 bg-gradient-to-br from-[#6f00d2] via-[#8b2cf5] to-[#2000c7]">
+            {/* Abstract shapes matching mockup aesthetic */}
+            <div className="absolute top-4 right-8 w-32 h-32 rounded-full bg-white/10 blur-xl" />
+            <div className="absolute bottom-4 left-4 w-24 h-24 rounded-full bg-[#00ADB5]/20 blur-xl" />
+            <div className="absolute top-1/2 left-1/3 w-40 h-40 rounded-full bg-white/5 blur-2xl" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface-container-lowest" />
           </div>
 
           <div className="flex-1 flex flex-col px-md pb-xl pt-sm relative z-10 -mt-12 bg-surface-container-lowest rounded-t-[32px]">

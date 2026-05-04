@@ -171,11 +171,8 @@ export default function ChatPage() {
       <div className="md:hidden min-h-screen flex flex-col">
         <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest flex justify-between items-center px-6 py-4">
           <div className="flex items-center gap-sm">
-            <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
-              <span className="material-symbols-outlined text-on-primary-container text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                psychology
-              </span>
-            </div>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center overflow-hidden shadow-md">
+                <span className="text-white font-label-bold text-label-sm">ML</span>
             <h1 className="font-headline-md text-headline-md text-primary font-black tracking-tighter">
               Hush
             </h1>
@@ -198,7 +195,7 @@ export default function ChatPage() {
                     <div className="flex items-end gap-base">
                       <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0 overflow-hidden">
                         <span className="material-symbols-outlined text-on-primary-container text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                          psychology
+                          ML
                         </span>
                       </div>
                       <div className="bg-surface-container rounded-2xl rounded-tl-sm p-sm max-w-[85%] shadow-sm">
@@ -257,7 +254,7 @@ export default function ChatPage() {
               <div className="flex items-end gap-base">
                 <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
                   <span className="material-symbols-outlined text-on-primary-container text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    psychology
+                    ML
                   </span>
                 </div>
                 <div className="bg-primary-container rounded-2xl rounded-tl-sm p-sm">
@@ -308,7 +305,7 @@ export default function ChatPage() {
                 <>
                   <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0 overflow-hidden">
                     <span className="material-symbols-outlined text-on-primary-container" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      psychology
+                      ML
                     </span>
                   </div>
                   <div className="max-w-[85%] bg-surface-container text-on-surface rounded-2xl rounded-tl-sm p-4 shadow-sm">
@@ -368,7 +365,7 @@ export default function ChatPage() {
             <div className="flex justify-start mb-sm gap-sm items-start">
               <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0">
                 <span className="material-symbols-outlined text-on-primary-container" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  psychology
+                  ML
                 </span>
               </div>
               <div className="bg-surface-container rounded-2xl rounded-tl-sm p-4">
