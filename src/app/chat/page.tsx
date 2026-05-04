@@ -190,8 +190,8 @@ export default function ChatPage() {
             {messages.map((msg, i) => (
               <div key={i} className={msg.role === "user" ? "flex justify-end" : "flex flex-col gap-sm"}>
                 {msg.role === "user" ? (
-                  <div className="bg-surface-variant rounded-2xl rounded-tr-sm p-sm max-w-[85%] shadow-card">
-                    <p className="font-body-md text-body-md text-on-surface-variant">{msg.content}</p>
+                  <div className="bg-primary rounded-2xl rounded-tr-sm p-sm max-w-[85%] shadow-card">
+                    <p className="font-body-md text-body-md text-on-primary">{msg.content}</p>
                   </div>
                 ) : (
                   <>
@@ -201,10 +201,26 @@ export default function ChatPage() {
                           psychology
                         </span>
                       </div>
-                      <div className="bg-primary-container rounded-2xl rounded-tl-sm p-sm max-w-[85%] shadow-[0_4px_20px_0px_rgba(139,44,245,0.08)]">
-                        <p className="font-body-md text-body-md text-on-primary">{msg.content}</p>
+                      <div className="bg-surface-container rounded-2xl rounded-tl-sm p-sm max-w-[85%] shadow-sm">
+                        <p className="font-body-md text-body-md text-on-surface">{msg.content}</p>
                       </div>
                     </div>
+                    {/* Linda Cue - shows occasionally with coaching tips */}
+                    {i > 0 && i % 3 === 0 && (
+                      <div className="ml-10 bg-tertiary-fixed/30 border-l-[4px] border-tertiary-fixed-dim rounded-lg p-sm shadow-[0_4px_20px_0px_rgba(0,0,0,0.02)]">
+                        <div className="flex items-center gap-xs mb-xs">
+                          <span className="material-symbols-outlined text-tertiary text-[18px]">lightbulb</span>
+                          <h3 className="font-label-bold text-label-bold text-tertiary">Pro Tip</h3>
+                        </div>
+                        <p className="font-body-md text-body-md text-on-surface-variant mb-sm">
+                          Your body speaks louder than your words. Stillness reveals the truth.
+                        </p>
+                        <div className="flex gap-xs">
+                          <span className="px-2 py-1 bg-primary-fixed text-primary font-label-sm text-label-sm rounded-full">Body Language</span>
+                          <span className="px-2 py-1 bg-primary-fixed text-primary font-label-sm text-label-sm rounded-full">Presence</span>
+                        </div>
+                      </div>
+                    )}
                     {msg.audioUrl && (
                       <div className="flex items-center gap-base ml-10">
                         <button
@@ -272,7 +288,7 @@ export default function ChatPage() {
               className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-secondary-container shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50"
             >
               <span className="material-symbols-outlined text-on-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                send
+                mic
               </span>
             </button>
           </form>
@@ -366,7 +382,7 @@ export default function ChatPage() {
               className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-[12px] bg-gradient-to-br from-primary-container to-secondary-container shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50"
             >
               <span className="material-symbols-outlined text-on-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                send
+                mic
               </span>
             </button>
           </form>
