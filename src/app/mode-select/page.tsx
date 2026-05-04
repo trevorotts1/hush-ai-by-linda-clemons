@@ -41,10 +41,11 @@ const TRACKS = [
     title: "Transform Your Relationships",
     subtitle: "Use the Quiet Hold, barely-there flirtation, and mirroring to transform every relationship.",
     icon: "mic",
-    gradient: "from-primary-fixed-dim/20 to-transparent",
-    iconBg: "bg-primary-fixed-dim",
-    iconColor: "text-on-primary-fixed",
-    hoverColor: "group-hover:text-primary",
+    gradient: "from-primary/60 to-secondary/60",
+    iconBg: "bg-white/20",
+    iconColor: "text-white",
+    hoverColor: "group-hover:text-white",
+    featured: true,
   },
   {
     id: "Something Else",
@@ -168,7 +169,11 @@ export default function ModeSelectPage() {
               key={track.id}
               disabled={loading}
               onClick={() => selectTrack(track.id)}
-              className="group relative overflow-hidden rounded-2xl bg-white shadow-sm border border-surface-variant hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 text-left h-full min-h-[280px] md:min-h-[320px] disabled:opacity-50"
+              className={`group relative overflow-hidden rounded-2xl shadow-sm border transition-all duration-300 text-left h-full min-h-[280px] md:min-h-[320px] disabled:opacity-50 ${
+                track.featured
+                  ? "bg-primary text-on-primary border-primary shadow-md hover:shadow-lg"
+                  : "bg-white border-surface-variant hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+              }`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
               <div className="relative z-10 p-md flex flex-col h-full justify-between">
@@ -178,10 +183,10 @@ export default function ModeSelectPage() {
                   </span>
                 </div>
                 <div>
-                  <h2 className={`font-headline-md text-headline-md text-on-surface mb-xs ${track.hoverColor} transition-colors`}>
+                  <h2 className={`font-headline-md text-headline-md mb-xs ${track.hoverColor} transition-colors ${track.featured ? "text-on-primary" : "text-on-surface"}`}>
                     {track.title}
                   </h2>
-                  <p className="font-body-md text-body-md text-on-surface-variant">{track.subtitle}</p>
+                  <p className={`font-body-md text-body-md ${track.featured ? "text-on-primary/70" : "text-on-surface-variant"}`}>{track.subtitle}</p>
                 </div>
               </div>
             </button>

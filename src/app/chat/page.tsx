@@ -344,6 +344,22 @@ export default function ChatPage() {
                       </div>
                     )}
                   </div>
+                  {/* Linda Cue - desktop */}
+                  {i > 0 && i % 3 === 0 && (
+                    <div className="bg-tertiary-fixed/30 border-l-[4px] border-tertiary-fixed-dim rounded-lg p-sm shadow-[0_4px_20px_0px_rgba(0,0,0,0.02)] max-w-[85%] ml-12">
+                      <div className="flex items-center gap-xs mb-xs">
+                        <span className="material-symbols-outlined text-tertiary text-[18px]">lightbulb</span>
+                        <h3 className="font-label-bold text-label-bold text-tertiary">Pro Tip</h3>
+                      </div>
+                      <p className="font-body-md text-body-md text-on-surface-variant mb-sm">
+                        Your body speaks louder than your words. Stillness reveals the truth.
+                      </p>
+                      <div className="flex gap-xs">
+                        <span className="px-2 py-1 bg-primary-fixed text-primary font-label-sm text-label-sm rounded-full">Body Language</span>
+                        <span className="px-2 py-1 bg-primary-fixed text-primary font-label-sm text-label-sm rounded-full">Presence</span>
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
             </div>
