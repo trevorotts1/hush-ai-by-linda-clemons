@@ -57,3 +57,19 @@
 
 - `npm run lint` passes with zero errors.
 - `npm run build` passes.
+
+## v0.1.2 (May 5, 2026)
+
+### Persona and Chat Fidelity Pass
+
+- Strengthened Ms. Linda prompt with story → truth → application → question rhythm.
+- Added culturally grounded Linda voice rules, signature phrases, metaphor guidance, and stronger body-language governance.
+- Added `LindaAvatar` fallback component so the app has a branded Linda presence until the real photo is provided.
+- Added `LindaCue` coaching card to restore the signature cue/pro-tip experience from the Stitch chat mockup.
+- Replaced generic psychology icons in chat with Linda avatar fallback.
+- Improved chat bubble contrast and desktop input alignment.
+
+### Verification
+
+- `npm run lint` passes.
+- `npm run build` passes.

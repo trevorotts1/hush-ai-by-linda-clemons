@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
+import LindaAvatar from "@/components/LindaAvatar";
+import LindaCue from "@/components/LindaCue";
 
 interface Message {
   role: "user" | "assistant";
@@ -229,11 +231,7 @@ export default function ChatPage() {
       <div className="md:hidden min-h-screen flex flex-col">
         <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest flex justify-between items-center px-6 py-4">
           <div className="flex items-center gap-sm">
-            <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
-              <span className="material-symbols-outlined text-on-primary-container text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                psychology
-              </span>
-            </div>
+<LindaAvatar size="md" />
             <h1 className="font-headline-md text-headline-md text-primary font-black tracking-tighter">
               Hush
             </h1>
@@ -245,6 +243,7 @@ export default function ChatPage() {
 
         <main className="flex-grow pt-[88px] pb-[100px] px-container-margin w-full flex flex-col gap-lg">
           <div className="flex flex-col gap-md">
+            {messages.length > 0 && <LindaCue index={exchangeCount} />}
             {messages.map((msg, i) => (
               <div key={i} className={msg.role === "user" ? "flex justify-end" : "flex flex-col gap-sm"}>
                 {msg.role === "user" ? (
@@ -254,13 +253,9 @@ export default function ChatPage() {
                 ) : (
                   <>
                     <div className="flex items-end gap-base">
-                      <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0 overflow-hidden">
-                        <span className="material-symbols-outlined text-on-primary-container text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                          psychology
-                        </span>
-                      </div>
-                      <div className="bg-primary-container rounded-2xl rounded-tl-sm p-sm max-w-[85%] shadow-[0_4px_20px_0px_rgba(139,44,245,0.08)]">
-                        <p className="font-body-md text-body-md text-on-primary">{msg.content}</p>
+                      <LindaAvatar size="sm" />
+                      <div className="bg-surface-container rounded-2xl rounded-tl-sm p-sm max-w-[85%] shadow-card border border-outline-variant/40">
+                        <p className="font-body-md text-body-md text-on-surface">{msg.content}</p>
                       </div>
                     </div>
                     {msg.audioUrl && (
@@ -297,11 +292,7 @@ export default function ChatPage() {
             ))}
             {loading && (
               <div className="flex items-end gap-base">
-                <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-on-primary-container text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    psychology
-                  </span>
-                </div>
+                <LindaAvatar size="sm" />
                 <div className="bg-primary-container rounded-2xl rounded-tl-sm p-sm">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" />
@@ -339,8 +330,9 @@ export default function ChatPage() {
       </div>
 
       {/* DESKTOP */}
-      <div className="hidden md:flex md:ml-64 pt-20 pb-24 flex-col max-w-4xl mx-auto w-full relative">
+      <div className="hidden md:flex md:ml-64 pt-20 pb-24 flex-col max-w-5xl mx-auto w-full relative">
         <div className="flex-1 overflow-y-auto p-container-margin md:p-md space-y-lg flex flex-col">
+          {messages.length > 0 && <LindaCue index={exchangeCount} />}
           {messages.map((msg, i) => (
             <div key={i} className={msg.role === "user" ? "flex justify-end mb-sm" : "flex justify-start mb-sm gap-sm items-start"}>
               {msg.role === "user" ? (
@@ -349,11 +341,7 @@ export default function ChatPage() {
                 </div>
               ) : (
                 <>
-                  <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0 overflow-hidden">
-                    <span className="material-symbols-outlined text-on-primary-container" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      psychology
-                    </span>
-                  </div>
+                  <LindaAvatar size="md" />
                   <div className="max-w-[85%] bg-surface-container text-on-surface rounded-2xl rounded-tl-sm p-4 shadow-sm">
                     <p className="font-body-md text-body-md mb-3">{msg.content}</p>
                     {msg.audioUrl && (
@@ -393,11 +381,7 @@ export default function ChatPage() {
           ))}
           {loading && (
             <div className="flex justify-start mb-sm gap-sm items-start">
-              <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-on-primary-container" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  psychology
-                </span>
-              </div>
+              <LindaAvatar size="md" />
               <div className="bg-surface-container rounded-2xl rounded-tl-sm p-4">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 bg-primary/40 rounded-full animate-bounce" />
@@ -410,8 +394,8 @@ export default function ChatPage() {
           <div ref={chatEndRef} />
         </div>
 
-        <div className="fixed bottom-0 w-full z-40 bg-surface/90 backdrop-blur-sm border-t border-surface-container-highest justify-center pb-sm pt-sm left-0 flex">
-          <form onSubmit={sendMessage} className="w-full max-w-[1140px] px-container-margin flex items-center gap-sm">
+        <div className="fixed bottom-0 left-64 right-0 z-40 bg-surface/90 backdrop-blur-sm border-t border-surface-container-highest justify-center pb-sm pt-sm flex">
+          <form onSubmit={sendMessage} className="w-full max-w-4xl px-container-margin flex items-center gap-sm">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
