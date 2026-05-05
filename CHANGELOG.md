@@ -1,4 +1,4 @@
-# Changelog — Hush App
+# Changelog - Hush App
 
 ## v0.1.0 (May 1, 2026)
 
@@ -15,8 +15,8 @@
 ### Bug Fixes
 
 - Tailwind v4 compatibility fix + lazy Supabase client for build (a069c60)
-- Fish Audio `model_id` parameter fix — changed from `voice_id` to `model_id` for Linda's voice (98aa2c7)
-- Play/pause toggle fix — audio waveform button now properly pauses and resumes (98aa2c7)
+- Fish Audio `model_id` parameter fix - changed from `voice_id` to `model_id` for Linda's voice (98aa2c7)
+- Play/pause toggle fix - audio waveform button now properly pauses and resumes (98aa2c7)
 
 ### Architecture Decisions
 
@@ -73,3 +73,8 @@
 
 - `npm run lint` passes.
 - `npm run build` passes.
+
+### Copy Safety
+
+- Removed em dashes from app source text and docs.
+- Added an explicit Ms. Linda prompt rule to avoid em dashes in generated chat output.

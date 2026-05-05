@@ -52,7 +52,7 @@ export async function chat(
     console.warn("DeepSeek did not return valid JSON format, using raw text");
     return { text: content, tagged_text: content };
   } catch {
-    // JSON parse failed — fallback to raw text
+    // JSON parse failed - fallback to raw text
     console.warn("DeepSeek JSON parse failed, using raw text");
     return { text: content, tagged_text: content };
   }

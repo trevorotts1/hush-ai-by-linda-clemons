@@ -13,7 +13,7 @@ export async function sendSessionEmail(
   session: SessionData
 ) {
   if (!AGENTMAIL_API_KEY) {
-    console.warn("AGENTMAIL_API_KEY not set — skipping email");
+    console.warn("AGENTMAIL_API_KEY not set - skipping email");
     return { skipped: true };
   }
 
@@ -27,7 +27,7 @@ export async function sendSessionEmail(
   const htmlBody = `
     <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background: #fcf9f8;">
       <h1 style="color: #6f00d2; font-size: 32px; margin-bottom: 8px;">Your Hush Session</h1>
-      <p style="color: #4c4355; font-size: 16px; margin-bottom: 32px;">With Ms. Linda — ${session.primary_track}</p>
+      <p style="color: #4c4355; font-size: 16px; margin-bottom: 32px;">With Ms. Linda - ${session.primary_track}</p>
       
       <div style="background: #ffffff; border-radius: 24px; padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(139,44,245,0.04);">
         <h2 style="color: #6f00d2; font-size: 20px; margin-bottom: 16px;">Your Personal Affirmation</h2>
@@ -48,14 +48,14 @@ export async function sendSessionEmail(
         <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://hush-app.vercel.app'}" style="background: linear-gradient(135deg, #6f00d2, #2000c7); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 16px;">Start Another Session</a>
       </div>
 
-      <p style="text-align: center; color: #7d7387; font-size: 12px; margin-top: 40px;">The Hush App — Presence with Personality</p>
+      <p style="text-align: center; color: #7d7387; font-size: 12px; margin-top: 40px;">The Hush App - Presence with Personality</p>
     </div>
   `;
 
   const body = {
     to: email,
     from: "Ms. Linda at Hush <coach@hush.app>",
-    subject: `Your Hush Session — ${session.primary_track}`,
+    subject: `Your Hush Session - ${session.primary_track}`,
     html: htmlBody,
   };
 

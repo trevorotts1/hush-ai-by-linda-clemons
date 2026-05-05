@@ -15,7 +15,7 @@ const beVietnam = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "Hush — AI Coaching by Linda Clemons",
+  title: "Hush - AI Coaching by Linda Clemons",
   description: "Master the unspoken. Your personal AI coach for nonverbal communication mastery, powered by Linda Clemons.",
   icons: "/favicon.ico",
 };

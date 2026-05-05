@@ -1,15 +1,15 @@
-# Hush App — AI Coaching by Linda Clemons
+# Hush App - AI Coaching by Linda Clemons
 
 Linda Clemons' AI-powered nonverbal communication coaching app. Built on her bestselling book *Hush*, the app delivers real-time body language insights, coaching conversations, and voice-guided exercises through Linda's unmistakable voice and methodology.
 
 ## Features
 
-- **AI Coaching Chat** — DeepSeek-powered conversations in Linda Clemons' voice, drawing from her full book and methodology
-- **Voice TTS** — Fish Audio voice synthesis using Linda's custom voice model
-- **Mode Selection** — Multiple coaching tracks including "Read the Room," "Command the Room," and "Read Anyone Instantly"
-- **Affirmation Generation** — AI-generated personalized affirmations based on session context
-- **Post-Session Email** — Session summaries delivered via AgentMail with word cloud visualization
-- **Responsive Design** — Desktop and mobile layouts matching Stitch mockups
+- **AI Coaching Chat** - DeepSeek-powered conversations in Linda Clemons' voice, drawing from her full book and methodology
+- **Voice TTS** - Fish Audio voice synthesis using Linda's custom voice model
+- **Mode Selection** - Multiple coaching tracks including "Read the Room," "Command the Room," and "Read Anyone Instantly"
+- **Affirmation Generation** - AI-generated personalized affirmations based on session context
+- **Post-Session Email** - Session summaries delivered via AgentMail with word cloud visualization
+- **Responsive Design** - Desktop and mobile layouts matching Stitch mockups
 
 ## Tech Stack
 
