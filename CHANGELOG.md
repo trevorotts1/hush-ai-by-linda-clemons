@@ -78,3 +78,8 @@
 
 - Removed em dashes from app source text and docs.
 - Added an explicit Ms. Linda prompt rule to avoid em dashes in generated chat output.
+
+### Live Smoke Follow-up
+
+- Hardened DeepSeek JSON parsing so chat text falls back from tagged audio text if the model returns empty plain text.
+- Added placeholder Library, Progress, and Settings pages so navigation no longer prefetches or lands on 404s.

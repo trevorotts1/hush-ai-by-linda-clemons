@@ -11,6 +11,15 @@ interface DeepSeekResponse {
   tagged_text: string;
 }
 
+function cleanText(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.replace(/\u2014/g, "-").trim();
+}
+
+function stripExpressionTags(value: string): string {
+  return value.replace(/\([^)]{1,40}\)/g, "").replace(/\s+/g, " ").trim();
+}
+
 export async function chat(
   messages: DeepSeekMessage[],
   options?: { temperature?: number; max_tokens?: number }
@@ -45,15 +54,23 @@ export async function chat(
 
   try {
     const parsed = JSON.parse(content);
-    if (parsed.text && parsed.tagged_text) {
-      return { text: parsed.text, tagged_text: parsed.tagged_text };
+    const taggedText = cleanText(parsed.tagged_text);
+    const plainText = cleanText(parsed.text) || stripExpressionTags(taggedText);
+    if (plainText || taggedText) {
+      const fallback = cleanText(content);
+      return {
+        text: plainText || fallback,
+        tagged_text: taggedText || plainText || fallback,
+      };
     }
     // Fallback: use raw content for both
     console.warn("DeepSeek did not return valid JSON format, using raw text");
-    return { text: content, tagged_text: content };
+    const fallback = cleanText(content);
+    return { text: fallback, tagged_text: fallback };
   } catch {
     // JSON parse failed - fallback to raw text
     console.warn("DeepSeek JSON parse failed, using raw text");
-    return { text: content, tagged_text: content };
+    const fallback = cleanText(content);
+    return { text: fallback, tagged_text: fallback };
   }
 }
