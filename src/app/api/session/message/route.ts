@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { buildSystemPrompt } from "@/lib/prompt";
-import { chat } from "@/lib/deepseek";
+import { chat, type DeepSeekMessage } from "@/lib/deepseek";
 import { searchBook, formatSearchContext } from "@/lib/search";
+import { errorMessage } from "@/lib/errors";
 
 const MAX_EXCHANGES = 100;
+
+type TranscriptMessage = {
+  role: "user" | "assistant";
+  content: string;
+  timestamp?: string;
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -51,16 +58,12 @@ export async function POST(req: NextRequest) {
     const userName = user?.first_name || "friend";
 
     // Build conversation history from transcript
-    const transcript = (session.transcript || []) as Array<{ role: string; content: string }>;
-    const history = transcript
-      .slice(-20)
-      .map((m) => `${m.role === "assistant" ? "Ms. Linda" : userName}: ${m.content}`)
-      .join("\n");
+    const transcript = (session.transcript || []) as TranscriptMessage[];
 
     // Build messages with semantic search
     const systemPrompt = buildSystemPrompt({ track: session.primary_track, userName, exchangeCount });
     
-    const messages: Array<{ role: string; content: string }> = [
+    const messages: DeepSeekMessage[] = [
       { role: "system", content: systemPrompt },
     ];
 
@@ -83,17 +86,17 @@ export async function POST(req: NextRequest) {
     messages.push({ role: "user", content: message });
 
     // Get response
-    const response = await chat(messages as any);
+    const response = await chat(messages);
 
     // Generate affirmation after 5+ exchanges if not yet done
     let affirmation = session.affirmation;
     if (!affirmation && exchangeCount >= 5) {
       const affirmationPrompt = [
         { role: "system", content: "You are Ms. Linda Clemons. Based on this coaching conversation, write a short, powerful personal affirmation for the user. It should be 1-2 sentences, in Linda's voice, using the user's name. It should reference what they discussed and give them a mantra to carry forward. Output ONLY the affirmation text, nothing else." },
-        { role: "user", content: transcript.slice(-10).map((m: any) => `${m.role === "assistant" ? "Ms. Linda" : userName}: ${m.content}`).join("\n") },
-      ];
+        { role: "user", content: transcript.slice(-10).map((m) => `${m.role === "assistant" ? "Ms. Linda" : userName}: ${m.content}`).join("\n") },
+      ] satisfies DeepSeekMessage[];
       try {
-        const affResponse = await chat(affirmationPrompt as any, { temperature: 0.9 });
+        const affResponse = await chat(affirmationPrompt, { temperature: 0.9 });
         affirmation = affResponse.text;
         await supabaseAdmin.from("hush_sessions").update({ affirmation }).eq("id", session_id);
       } catch { /* affirmation is optional */ }
@@ -120,8 +123,8 @@ export async function POST(req: NextRequest) {
       session_ended: false,
       exchange_count: exchangeCount + 1,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Message error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }

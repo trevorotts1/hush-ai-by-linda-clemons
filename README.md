@@ -24,7 +24,7 @@ Linda Clemons' AI-powered nonverbal communication coaching app. Built on her bes
 | Email | AgentMail |
 | Deployment | Vercel |
 | Image Gen | Kie.ai (GPT Image 2) |
-| Embeddings | OpenAI text-embedding-3-small |
+| Search | Supabase full-text search over 573 Hush book chunks |
 
 ## Setup
 
@@ -56,7 +56,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public Supabase anon key |
 | `AGENTMAIL_API_KEY` | AgentMail API key for email |
 | `KIE_API_KEY` | Kie.ai API key for image generation |
-| `OPENAI_API_KEY` | OpenAI API key for embeddings |
+| `OPENAI_API_KEY` | Optional, reserved for future infographic or embedding experiments |
 
 ## Deployment
 

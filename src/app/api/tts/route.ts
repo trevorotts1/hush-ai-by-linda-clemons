@@ -1,3 +1,4 @@
+import { errorMessage } from "@/lib/errors";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -37,8 +38,8 @@ export async function POST(req: NextRequest) {
     const audioUrl = `data:audio/mp3;base64,${base64}`;
 
     return NextResponse.json({ audio_url: audioUrl });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("TTS error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }

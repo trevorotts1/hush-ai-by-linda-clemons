@@ -1,3 +1,4 @@
+import { errorMessage } from "@/lib/errors";
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { sendSessionEmail } from "@/lib/deliver";
@@ -42,8 +43,8 @@ export async function POST(req: NextRequest) {
       .eq("id", session_id);
 
     return NextResponse.json({ status: "ended", session_id });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Session end error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }

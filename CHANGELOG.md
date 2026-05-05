@@ -40,3 +40,20 @@
 | Deployment | Vercel |
 | Image Gen | Kie.ai (GPT Image 2) |
 | Embeddings | OpenAI text-embedding-3-small |
+
+## v0.1.1 (May 5, 2026)
+
+### Structural Hardening
+
+- Wired Hush design tokens into Tailwind v4 utilities for spacing, shadows, typography, and safe-area padding.
+- Fixed ESLint errors across API routes, chat client, Supabase lazy client, and mode selection page.
+- Added typed error handling helper instead of repeated `any` catch blocks.
+- Fixed chat React hook structure by removing synchronous effect state setup and stabilizing session-end behavior.
+- Fixed session idle tracking so it uses the latest transcript timestamp instead of `started_at`.
+- Updated `db/schema.sql` to match the live Supabase full-text search architecture: `hush_book_chunks` + `search_book`.
+- Replaced plain image tags with Next Image where structural lint required it.
+
+### Verification
+
+- `npm run lint` passes with zero errors.
+- `npm run build` passes.

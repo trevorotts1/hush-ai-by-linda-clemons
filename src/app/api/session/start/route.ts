@@ -1,3 +1,4 @@
+import { errorMessage } from "@/lib/errors";
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { buildSystemPrompt } from "@/lib/prompt";
@@ -75,8 +76,8 @@ Remember Ms. Linda's voice: warm, sassy, uses "baby" and "Ms. Linda", references
       greeting: response.text,
       greeting_tagged: response.tagged_text,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Session start error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }

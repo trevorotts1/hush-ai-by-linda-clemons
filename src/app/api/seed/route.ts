@@ -1,3 +1,4 @@
+import { errorMessage } from "@/lib/errors";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
@@ -20,7 +21,7 @@ export async function GET(req: NextRequest) {
     const chunks: string[] = [];
     let start = 0;
     while (start < text.length) {
-      let end = Math.min(start + 500, text.length);
+      const end = Math.min(start + 500, text.length);
       let chunk = text.slice(start, end);
       if (end < text.length) {
         for (const sep of [". ", ".\n", "\n\n", "\n", " "]) {
@@ -55,7 +56,7 @@ export async function GET(req: NextRequest) {
       inserted: batch.length,
       done: offset + batchSize >= chunks.length,
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }

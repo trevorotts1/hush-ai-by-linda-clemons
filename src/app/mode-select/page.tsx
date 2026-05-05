@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import BottomNav from "@/components/BottomNav";
 
@@ -64,19 +65,24 @@ const TRACKS = [
   },
 ];
 
+function readStoredUser(): { id: string; first_name?: string } | null {
+  if (typeof window === "undefined") return null;
+  const stored = window.sessionStorage.getItem("hush_user");
+  if (!stored) return null;
+  try {
+    return JSON.parse(stored) as { id: string; first_name?: string };
+  } catch {
+    return null;
+  }
+}
+
 export default function ModeSelectPage() {
   const router = useRouter();
-  const [userName, setUserName] = useState("");
+  const [userName] = useState(() => readStoredUser()?.first_name || "");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("hush_user");
-    if (!stored) {
-      router.push("/");
-      return;
-    }
-    const user = JSON.parse(stored);
-    setUserName(user.first_name || "");
+    if (!readStoredUser()) router.push("/");
   }, [router]);
 
   async function selectTrack(track: string) {
@@ -96,7 +102,7 @@ export default function ModeSelectPage() {
 
       sessionStorage.setItem("hush_session", JSON.stringify({ id: data.session_id, greeting: data.greeting }));
       router.push("/chat");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
     } finally {
       setLoading(false);
@@ -123,7 +129,7 @@ export default function ModeSelectPage() {
           <section className="flex flex-col gap-sm">
             <h1 className="font-headline-xl text-headline-xl text-on-surface">Presence Check</h1>
             <p className="font-body-lg text-body-lg text-on-surface-variant">
-              Hey {userName}, I'm Ms. Linda. What can I help you master today?
+              Hey {userName}, I&apos;m Ms. Linda. What can I help you master today?
             </p>
           </section>
 
@@ -172,7 +178,7 @@ export default function ModeSelectPage() {
         <header className="mb-lg">
           <h1 className="font-headline-xl text-headline-xl text-on-surface mb-xs">Presence Check</h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-            Hey {userName}, I'm Ms. Linda. Reading the room with you. Choose your communication context for tailored coaching.
+            Hey {userName}, I&apos;m Ms. Linda. Reading the room with you. Choose your communication context for tailored coaching.
           </p>
         </header>
 
@@ -191,7 +197,7 @@ export default function ModeSelectPage() {
               {/* Card background image */}
               {track.image && (
                 <div className="absolute top-0 right-0 w-3/5 h-full overflow-hidden rounded-r-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500 mix-blend-multiply">
-                  <img src={track.image} alt="" className="object-cover w-full h-full" />
+                  <Image src={track.image} alt="" fill sizes="(min-width: 768px) 342px, 0px" className="object-cover" />
                 </div>
               )}
               {/* Abstract decorative shapes */}

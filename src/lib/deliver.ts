@@ -1,5 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
-
 const AGENTMAIL_API_KEY = process.env.AGENTMAIL_API_KEY!;
 const AGENTMAIL_URL = "https://api.agentmail.to/v1/email/send";
 

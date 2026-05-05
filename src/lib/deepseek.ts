@@ -1,7 +1,7 @@
 const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
 const DEEPSEEK_MODEL = "deepseek-chat";
 
-interface DeepSeekMessage {
+export interface DeepSeekMessage {
   role: "system" | "user" | "assistant";
   content: string;
 }

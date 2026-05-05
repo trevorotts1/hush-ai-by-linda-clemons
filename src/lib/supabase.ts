@@ -24,11 +24,17 @@ function getAdmin(): SupabaseClient {
 
 // Lazy accessors
 export const supabase = new Proxy({} as SupabaseClient, {
-  get(_, prop) { return (getClient() as any)[prop]; }
+  get(_target, prop) {
+    const client = getClient() as unknown as Record<PropertyKey, unknown>;
+    return client[prop];
+  }
 });
 
 export const supabaseAdmin = new Proxy({} as SupabaseClient, {
-  get(_, prop) { return (getAdmin() as any)[prop]; }
+  get(_target, prop) {
+    const admin = getAdmin() as unknown as Record<PropertyKey, unknown>;
+    return admin[prop];
+  }
 });
 
 export async function createUser(email: string, phone: string, firstName: string) {

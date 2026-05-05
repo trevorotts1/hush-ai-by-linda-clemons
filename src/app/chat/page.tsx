@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
-import BottomNav from "@/components/BottomNav";
 
 interface Message {
   role: "user" | "assistant";
@@ -11,10 +10,49 @@ interface Message {
   audioUrl?: string;
 }
 
+type StoredSession = {
+  id: string;
+  greeting?: string;
+};
+
+type SpeechRecognitionEvent = Event & {
+  results: ArrayLike<ArrayLike<{ transcript: string }>>;
+};
+
+type SpeechRecognitionInstance = {
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+};
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionInstance;
+
+type BrowserWindowWithSpeech = Window & {
+  SpeechRecognition?: SpeechRecognitionConstructor;
+  webkitSpeechRecognition?: SpeechRecognitionConstructor;
+};
+
+function readStoredSession(): StoredSession | null {
+  if (typeof window === "undefined") return null;
+  const stored = window.sessionStorage.getItem("hush_session");
+  if (!stored) return null;
+  try {
+    return JSON.parse(stored) as StoredSession;
+  } catch {
+    return null;
+  }
+}
+
 export default function ChatPage() {
   const router = useRouter();
-  const [sessionId, setSessionId] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [sessionId] = useState(() => readStoredSession()?.id || "");
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const session = readStoredSession();
+    return session?.greeting ? [{ role: "assistant", content: session.greeting }] : [];
+  });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionEnded, setSessionEnded] = useState(false);
@@ -26,14 +64,15 @@ export default function ChatPage() {
 
   // Speech-to-text using Web Speech API
   function startListening() {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const browserWindow = window as BrowserWindowWithSpeech;
+    const SpeechRecognition = browserWindow.SpeechRecognition || browserWindow.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setInput((prev) => prev + ' ' + transcript);
+    recognition.onresult = (event) => {
+      const transcript = event.results[0]?.[0]?.transcript || "";
+      setInput((prev) => `${prev} ${transcript}`.trim());
       setListening(false);
     };
     recognition.onerror = () => setListening(false);
@@ -43,23 +82,25 @@ export default function ChatPage() {
   }
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("hush_session");
-    if (!stored) {
-      router.push("/mode-select");
-      return;
-    }
-    const session = JSON.parse(stored);
-    setSessionId(session.id);
-
-    // Show proactive greeting
-    if (session.greeting) {
-      setMessages([{ role: "assistant", content: session.greeting }]);
-    }
-  }, [router]);
+    if (!sessionId) router.push("/mode-select");
+  }, [router, sessionId]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const endSession = useCallback(async () => {
+    if (!sessionId) return;
+    try {
+      await fetch("/api/session/end", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: sessionId }),
+      });
+    } catch {
+      // Ending is best-effort because the user may close the app mid-request.
+    }
+  }, [sessionId]);
 
   // Idle timer
   useEffect(() => {
@@ -68,31 +109,22 @@ export default function ChatPage() {
     const interval = setInterval(async () => {
       try {
         const res = await fetch(`/api/session/status?session_id=${sessionId}`);
-        const data = await res.json();
+        const data: { status?: string; exchange_count?: number; idle_minutes?: number } = await res.json();
         setExchangeCount(data.exchange_count || 0);
-        if (data.status === "completed" || data.idle_minutes >= 3) {
+        if (data.status === "completed" || (data.idle_minutes ?? 0) >= 3) {
           setSessionEnded(true);
           clearInterval(interval);
-          endSession();
+          void endSession();
         }
-      } catch {}
+      } catch {
+        // Keep the client alive if a single status poll fails.
+      }
     }, 30000);
 
     return () => clearInterval(interval);
-  }, [sessionId, sessionEnded]);
+  }, [endSession, sessionId, sessionEnded]);
 
-  async function endSession() {
-    try {
-      await fetch("/api/session/end", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId }),
-      });
-    } catch {}
-  }
-
-  async function sendMessage(e: React.FormEvent) {
-    e.preventDefault();
+  async function sendCurrentMessage() {
     if (!input.trim() || loading || sessionEnded) return;
 
     const userMsg = input.trim();
@@ -106,11 +138,11 @@ export default function ChatPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ session_id: sessionId, message: userMsg }),
       });
-      const data = await res.json();
+      const data: { session_ended?: boolean; text?: string; tagged_text?: string } = await res.json();
       
       if (data.session_ended) {
         setSessionEnded(true);
-        setMessages((prev) => [...prev, { role: "assistant", content: data.text }]);
+        setMessages((prev) => [...prev, { role: "assistant", content: data.text || "Session complete." }]);
         return;
       }
 
@@ -123,17 +155,24 @@ export default function ChatPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: data.tagged_text }),
           });
-          const ttsData = await ttsRes.json();
+          const ttsData: { audio_url?: string } = await ttsRes.json();
           audioUrl = ttsData.audio_url;
-        } catch {}
+        } catch {
+          // Text still works if voice generation fails.
+        }
       }
 
-      setMessages((prev) => [...prev, { role: "assistant", content: data.text, audioUrl }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: data.text || "", audioUrl }]);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
+  }
+
+  function sendMessage(e: React.FormEvent) {
+    e.preventDefault();
+    void sendCurrentMessage();
   }
 
   function playAudio(url: string) {
@@ -287,7 +326,7 @@ export default function ChatPage() {
             />
             <button
               type="button"
-              onClick={() => input.trim() ? sendMessage({ preventDefault: () => {} } as any) : startListening()}
+              onClick={() => input.trim() ? void sendCurrentMessage() : startListening()}
               disabled={loading}
               className={`w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50 ${listening ? 'bg-red-500 animate-pulse' : 'bg-gradient-to-br from-primary-container to-secondary-container'}`}
             >
@@ -382,7 +421,7 @@ export default function ChatPage() {
             />
             <button
               type="button"
-              onClick={() => input.trim() ? sendMessage({ preventDefault: () => {} } as any) : startListening()}
+              onClick={() => input.trim() ? void sendCurrentMessage() : startListening()}
               disabled={loading}
               className={`w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-[12px] shadow-[0_4px_12px_rgba(139,44,245,0.2)] hover:shadow-[0_6px_16px_rgba(139,44,245,0.3)] transition-all active:scale-95 disabled:opacity-50 ${listening ? 'bg-red-500 animate-pulse' : 'bg-gradient-to-br from-primary-container to-secondary-container'}`}
             >

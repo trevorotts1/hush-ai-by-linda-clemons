@@ -23,5 +23,5 @@ export async function searchBook(query: string, limit = 5): Promise<SearchResult
 
 export function formatSearchContext(results: SearchResult[]): string {
   if (results.length === 0) return "";
-  return results.map((r, i) => `[${r.section || "Hush"}] ${r.content}`).join("\n\n---\n\n");
+  return results.map((r) => `[${r.section || "Hush"}] ${r.content}`).join("\n\n---\n\n");
 }

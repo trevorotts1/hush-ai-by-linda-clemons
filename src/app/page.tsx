@@ -1,7 +1,9 @@
 "use client";
 
+import { errorMessage } from "@/lib/errors";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -28,8 +30,8 @@ export default function SignupPage() {
       // Store user in session storage for the session
       sessionStorage.setItem("hush_user", JSON.stringify(data.user));
       router.push("/mode-select");
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
+    } catch (err: unknown) {
+      setError(errorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -128,7 +130,7 @@ export default function SignupPage() {
       <main className="hidden md:flex bg-background text-on-surface font-body-md min-h-screen items-center justify-center p-4 antialiased">
         <div className="w-full max-w-[420px] mx-auto bg-surface-container-lowest rounded-[32px] card-shadow overflow-hidden relative flex flex-col min-h-[800px] md:min-h-[700px]">
           <div className="h-64 relative w-full overflow-hidden shrink-0">
-            <img src="/images/hush-hero.jpg" alt="Hush" className="absolute inset-0 w-full h-full object-cover" />
+            <Image src="/images/hush-hero.jpg" alt="Hush" fill priority sizes="420px" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface-container-lowest" />
           </div>
 

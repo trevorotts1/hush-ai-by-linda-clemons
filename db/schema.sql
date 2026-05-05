@@ -1,8 +1,8 @@
 -- Hush App Database Schema
--- Run this in Supabase SQL Editor: https://supabase.com/dashboard/project/xniwslztgcidwfcuzxlo/sql/new
+-- Production-aligned Supabase schema for the current app architecture.
+-- Run in Supabase SQL Editor for project xniwslztgcidwfcuzxlo.
 
--- Enable pgvector
-CREATE EXTENSION IF NOT EXISTS vector;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- Users table
 CREATE TABLE IF NOT EXISTS hush_users (
@@ -16,11 +16,11 @@ CREATE TABLE IF NOT EXISTS hush_users (
 -- Sessions table
 CREATE TABLE IF NOT EXISTS hush_sessions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES hush_users(id),
+  user_id UUID REFERENCES hush_users(id) ON DELETE SET NULL,
   primary_track TEXT,
-  status TEXT DEFAULT 'active',
+  status TEXT DEFAULT 'active' CHECK (status IN ('active', 'completed', 'abandoned')),
   affirmation TEXT,
-  transcript JSONB DEFAULT '[]',
+  transcript JSONB DEFAULT '[]'::jsonb,
   word_cloud_data JSONB,
   infographic_url TEXT,
   started_at TIMESTAMPTZ DEFAULT now(),
@@ -28,17 +28,42 @@ CREATE TABLE IF NOT EXISTS hush_sessions (
   exchange_count INTEGER DEFAULT 0
 );
 
--- Knowledge chunks (pgvector)
-CREATE TABLE IF NOT EXISTS hush_knowledge_chunks (
+CREATE INDEX IF NOT EXISTS hush_sessions_user_id_idx ON hush_sessions(user_id);
+CREATE INDEX IF NOT EXISTS hush_sessions_status_idx ON hush_sessions(status);
+
+-- Sentence-boundary book chunks used by src/lib/search.ts.
+-- This replaced the older pgvector table because the current app uses Supabase full-text search.
+CREATE TABLE IF NOT EXISTS hush_book_chunks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  source TEXT NOT NULL,
-  section TEXT,
+  section TEXT DEFAULT 'Hush',
   content TEXT NOT NULL,
-  embedding VECTOR(1536)
+  search_vector TSVECTOR GENERATED ALWAYS AS (
+    to_tsvector('english', coalesce(section, '') || ' ' || content)
+  ) STORED,
+  created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Vector index
-CREATE INDEX IF NOT EXISTS hush_knowledge_embedding_idx 
-  ON hush_knowledge_chunks 
-  USING ivfflat (embedding vector_cosine_ops) 
-  WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS hush_book_chunks_search_idx
+  ON hush_book_chunks
+  USING GIN (search_vector);
+
+CREATE OR REPLACE FUNCTION search_book(query_text TEXT, limit_count INTEGER DEFAULT 5)
+RETURNS TABLE (
+  id UUID,
+  section TEXT,
+  content TEXT,
+  rank REAL
+)
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT
+    c.id,
+    c.section,
+    c.content,
+    ts_rank(c.search_vector, plainto_tsquery('english', query_text)) AS rank
+  FROM hush_book_chunks c
+  WHERE c.search_vector @@ plainto_tsquery('english', query_text)
+  ORDER BY rank DESC
+  LIMIT limit_count;
+$$;

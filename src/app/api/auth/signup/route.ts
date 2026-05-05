@@ -1,3 +1,4 @@
+import { errorMessage } from "@/lib/errors";
 import { NextRequest, NextResponse } from "next/server";
 import { createUser, getUser } from "@/lib/supabase";
 
@@ -18,8 +19,8 @@ export async function POST(req: NextRequest) {
     // Create new user
     const user = await createUser(email, phone || "", first_name);
     return NextResponse.json({ user, new: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Signup error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }
