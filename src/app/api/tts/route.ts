@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       headers: {
         "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "model": "s2-pro",
+        "model": "s2.1-pro",
       },
       body: JSON.stringify({
         text,

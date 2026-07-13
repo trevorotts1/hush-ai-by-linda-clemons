@@ -5,7 +5,31 @@ import path from "path";
 
 export const maxDuration = 300;
 
+/**
+ * Seed the knowledge base into hush_book_chunks.
+ *
+ * SECURITY (P0-7): this route performs a database WRITE. It is gated behind
+ * SEED_SECRET. A request must present the secret via the `x-seed-secret`
+ * header or `?secret=` query param. If SEED_SECRET is not configured, the
+ * route is disabled entirely (404) so no unauthenticated write path exists.
+ */
 export async function GET(req: NextRequest) {
+  const configuredSecret = process.env.SEED_SECRET;
+
+  // No secret configured -> route disabled. No anonymous write path may remain.
+  if (!configuredSecret) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  const provided =
+    req.headers.get("x-seed-secret") ||
+    req.nextUrl.searchParams.get("secret") ||
+    "";
+
+  if (provided !== configuredSecret) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const offset = parseInt(req.nextUrl.searchParams.get("offset") || "0");
     const batchSize = 50;

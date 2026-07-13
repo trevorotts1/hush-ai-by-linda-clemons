@@ -83,3 +83,42 @@
 
 - Hardened DeepSeek JSON parsing so chat text falls back from tagged audio text if the model returns empty plain text.
 - Added placeholder Library, Progress, and Settings pages so navigation no longer prefetches or lands on 404s.
+
+## v0.2.0 (July 13, 2026)
+
+### Voice
+
+- **Fish Audio 2.1 Pro** - upgraded the TTS model string to `s2.1-pro` in `src/app/api/tts/route.ts` and the persona prompt. Expression tags unchanged. No credential changes.
+
+### Reveal-blocker fixes (P0)
+
+- Fixed the invisible icon on the mobile focus cards (filled gold chip with a dark glyph, visible at every width).
+- Greeting now speaks on open with an auto-speak toggle (default on, persisted in `localStorage`).
+- Assistant replies render as short paragraphs (`whitespace-pre-line` + prompt guidance), not a wall of text.
+- Removed the raw `0/100` header counter; replaced with an elapsed session timer.
+- Idle timeout raised to 15 minutes with a "Still there?" warning and a "Keep going" action before any auto-end.
+- Added a visible **End & email recap** control.
+- Locked the `/api/seed` write endpoint behind `SEED_SECRET` (disabled entirely when unset).
+- Conversation is restored from the stored transcript on refresh.
+- Speech-to-text mic is feature-detected, shows a listening state and interim transcript, and hides where unsupported.
+- Replaced the static loading dots with staged status microcopy.
+- Signup no longer exposes an existing user's name/history to a different visitor; phone is optional and format-validated; a privacy notice is shown at PII collection.
+- Recap email: all user/assistant content is HTML-escaped, the sender comes from a verified `AGENTMAIL_FROM` address (never a fabricated domain), and send failures surface instead of reporting a false success.
+
+### Drastic UI/UX overhaul (P1) - "Quiet Luxury, Loud Presence"
+
+- Dark-first aubergine canvas, warm ivory text, purple demoted to accents, gold promoted as the Linda highlight.
+- Display serif (Fraunces) for headlines and affirmations; Plus Jakarta Sans for UI/body; both self-hosted.
+- Rebuilt Welcome, Choose-your-focus, Session, and new in-app Recap screens; real Library, Progress, and Settings v1s.
+- Shared AudioPlayer with scrubber, elapsed/total time, and an amplitude-reactive waveform (reduced-motion aware).
+- Unified Button and Card kit; toast error surface; safe-area-aware bottom bar; consistent BottomNav / Sidebar labels.
+- Removed decorative absolute-positioned shapes and hover-only affordances.
+
+### Persona depth (P2-2)
+
+- Wired the blueprint voice rules and power statements into the system prompt (spiritual foundation, storytelling architecture, signature phrases with examples, "tired old excuse" pattern, metaphors, closers).
+
+### Hygiene
+
+- Removed dead code: `src/app/hush-design-tokens.css`, `src/app/api/auth/verify`, and the unused `openai` and `pg` dependencies.
+- Added the `check:name` guard (regression guard for the "Clemons" spelling), run on every build.

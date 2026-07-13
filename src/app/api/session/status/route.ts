@@ -29,6 +29,13 @@ export async function GET(req: NextRequest) {
       status: session.status,
       exchange_count: session.exchange_count,
       idle_minutes: idleMinutes,
+      // P0-8: return the stored transcript so the chat client can rehydrate
+      // the full conversation after a refresh.
+      transcript: transcript.map((m) =>
+        typeof m === "object" && m !== null
+          ? { role: (m as { role?: string }).role, content: (m as { content?: string }).content }
+          : m
+      ),
     });
   } catch (error: unknown) {
     return NextResponse.json({ error: errorMessage(error) }, { status: 500 });

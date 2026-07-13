@@ -1,15 +1,19 @@
 # Hush App - AI Coaching by Linda Clemons
 
-Linda Clemons' AI-powered nonverbal communication coaching app. Built on her bestselling book *Hush*, the app delivers real-time body language insights, coaching conversations, and voice-guided exercises through Linda's unmistakable voice and methodology.
+Linda Clemons' AI-powered nonverbal communication coaching app. Built on her bestselling book *Hush*, the app delivers real-time body language insights, coaching conversations, and voice-guided exercises in Ms. Linda's cloned voice and methodology.
+
+Design language: **"Quiet Luxury, Loud Presence"** - a dark-first, voice-first, mobile-first companion. Presence with Personality.
 
 ## Features
 
-- **AI Coaching Chat** - DeepSeek-powered conversations in Linda Clemons' voice, drawing from her full book and methodology
-- **Voice TTS** - Fish Audio voice synthesis using Linda's custom voice model
-- **Mode Selection** - Multiple coaching tracks including "Read the Room," "Command the Room," and "Read Anyone Instantly"
-- **Affirmation Generation** - AI-generated personalized affirmations based on session context
-- **Post-Session Email** - Session summaries delivered via AgentMail with word cloud visualization
-- **Responsive Design** - Desktop and mobile layouts matching Stitch mockups
+- **Voice-first coaching chat** - DeepSeek-powered conversations in Linda Clemons' voice, drawing from her full book and methodology
+- **Voice TTS** - Fish Audio 2.1 Pro (`s2.1-pro`) synthesis using Linda's custom cloned voice, with expression tags
+- **Choose your focus** - Coaching tracks: Read Anyone Instantly, Command Any Room, Master Your Own Signals, Transform Your Relationships, or Something Else
+- **In-app session recap** - Personalized affirmation on a gold serif card, themes covered, and a full transcript accordion
+- **Affirmation generation** - AI-generated personalized affirmations based on session context
+- **Post-session email** - Session recap delivered via AgentMail (HTML-escaped, from a verified sender)
+- **Library & Progress** - Saved affirmations, book cues, and session/topic tracking
+- **Responsive** - One centered app across mobile and desktop (360 / 390 / 768 / 1280)
 
 ## Tech Stack
 
@@ -18,13 +22,13 @@ Linda Clemons' AI-powered nonverbal communication coaching app. Built on her bes
 | Framework | Next.js 16 |
 | UI | React 19, Tailwind CSS v4 |
 | Language | TypeScript |
-| AI Chat | DeepSeek V4 Flash |
-| Voice TTS | Fish Audio |
+| AI Chat | DeepSeek (`deepseek-chat`) |
+| Voice TTS | Fish Audio 2.1 Pro (`s2.1-pro`) |
 | Database | Supabase (PostgreSQL) |
 | Email | AgentMail |
 | Deployment | Vercel |
-| Image Gen | Kie.ai (GPT Image 2) |
-| Search | Supabase full-text search over 573 Hush book chunks |
+| Search | Supabase full-text search over the Hush book chunks |
+| Fonts | Plus Jakarta Sans (UI/body) + Fraunces (display serif), self-hosted via next/font |
 
 ## Setup
 
@@ -55,8 +59,18 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 | `NEXT_PUBLIC_SUPABASE_URL` | Public Supabase URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public Supabase anon key |
 | `AGENTMAIL_API_KEY` | AgentMail API key for email |
-| `KIE_API_KEY` | Kie.ai API key for image generation |
-| `OPENAI_API_KEY` | Optional, reserved for future infographic or embedding experiments |
+| `AGENTMAIL_FROM` | Verified sender address AgentMail may send as (required to send recap email). No email is sent from an unverified/fabricated domain. |
+| `SEED_SECRET` | Secret required to call `/api/seed`. If unset, the seed route is disabled entirely. |
+| `NEXT_PUBLIC_APP_URL` | Optional. Public app URL used in email links. |
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Local dev server |
+| `npm run build` | Production build (runs `check:name` first) |
+| `npm run check:name` | Fails if the coach's name is ever misspelled (must be "Clemons") |
+| `npm run lint` | ESLint |
 
 ## Deployment
 
